@@ -3,9 +3,9 @@ import App from "./App.vue";
 
 Vue.config.productionTip = false;
 
-import VueMaterial from "vue-material";
-import "vue-material/dist/vue-material.min.css";
+import BootstrapVue from "bootstrap-vue";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
 
-Vue.use(VueMaterial);
-
+Vue.use(BootstrapVue);
 new Vue(App).$mount("#app");
