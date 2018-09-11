@@ -1,0 +1,76 @@
+.form-container {
+    padding: 10% 20% 10%;
+    background-color: #e2d1c6;
+    font-size: 10pt;
+    font-family: Verdana, Geneva, sans-serif;
+
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        background-color: white;
+        border-radius: 10px;
+        padding: 5%;
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .left-container {
+            input {
+                font-size: 0.7rem;
+            }
+
+            font-size: 0.7rem;
+            flex: 1 0 65%;
+            padding: 20px;
+        }
+
+        .right-container {
+            padding-left: 5%;
+            flex: 1;
+
+            img {
+                width: 70px;
+            }
+        }
+
+        .card-footer {
+            background-color: white;
+            padding: 20px;
+            display: block;
+            width: 100%;
+
+            span.thick {
+                font-weight: bold;
+            }
+
+            span.amount {
+                color: #d1ac6a;
+            }
+
+            .col-amount {
+                position: relative;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .row-footer {
+                height: 50px;
+            }
+
+            .pay-button {
+                width: 70%;
+                height: 100%;
+                font-size: 9pt;
+                float: right;
+                border: none;
+                background-color: #d1ac6a;
+                border-radius: 35px;
+                box-shadow: 9px 9px 64px -25px rgba(0, 0, 0, 0.75),
+                    inset 1px 1px 60px -20px rgba(253, 253, 253, 0.75);
+            }
+        }
+    }
+}
