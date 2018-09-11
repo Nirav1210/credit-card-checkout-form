@@ -74,5 +74,4 @@
 </template>
 
 <script src="./Card.js"></script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style src="./Card.scss" lang="scss" scoped></style>

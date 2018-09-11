@@ -6,7 +6,7 @@
 
 <script>
   import Vue from "vue";
-  import Card from "./components/Card.vue";
+  import Card from "./components/Card/Card.vue";
 
   export default {
     name: "App",

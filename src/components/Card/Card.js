@@ -9,7 +9,7 @@ import Payment from "payment/lib";
 export default {
     name: "Card",
     props: {
-        cardprop: {
+        cardInfo: {
             type: Object,
             default: function () {
                 return {
@@ -31,7 +31,7 @@ export default {
     },
     data() {
         return {
-            card: this.cardprop,
+            card: this.cardInfo,
             cardTypes: ["mastercard", "visa"],
             numberSets: ["", "", "", ""],
             isError: false,
@@ -45,7 +45,7 @@ export default {
     },
     methods: {
         getImgUrl(src) {
-            var images = require.context("../assets/", false, /\.png$/);
+            var images = require.context("../../assets/", false, /\.png$/);
             return images("./" + src + ".png");
         },
         getValidityState(field) {
