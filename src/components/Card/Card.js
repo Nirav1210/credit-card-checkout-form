@@ -68,8 +68,12 @@ export default {
         onSubmit() {
             // validate provided input values
             this.validateForm(this.card);
+            // if no errors, display `success` message and
+            // disable the 'pay now' button.
             if (!this.isError) {
                 this.isPaymentSuccess = true;
+            } else {
+                this.isPaymentSuccess = false;
             }
         },
         /**

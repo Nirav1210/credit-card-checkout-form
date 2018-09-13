@@ -68,7 +68,7 @@
           </b-col>
           <b-col cols="4"></b-col>
           <b-col>
-            <b-button class="button-paynow" type="submit" variant="primary">PAY NOW</b-button>
+            <b-button class="button-paynow" :disabled="isPaymentSuccess" type="submit" variant="primary">PAY NOW</b-button>
           </b-col>
         </b-row>
       </div>

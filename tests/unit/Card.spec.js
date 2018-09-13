@@ -26,14 +26,15 @@ beforeEach(() => {
 
 describe("Card.vue validation", () => {
   const wrapper = shallowMount(Card);
-  it("validate if there are errors occured", () => {
+  it("payment should be successful if no errors", () => {
     wrapper.setData({
       card: cardData
     });
-    wrapper.vm.validateForm(cardData);
+    wrapper.vm.onSubmit();
     expect(wrapper.vm.isError).to.equal(false);
+    expect(wrapper.vm.isPaymentSuccess).to.equal(true);
   });
-  it("validate card number", () => {
+  it("should validate card number", () => {
     // correct card number
     cardData.cardNumber = ["4242", "4242", "4242", "4242"];
     wrapper.setData({
@@ -50,7 +51,7 @@ describe("Card.vue validation", () => {
     wrapper.vm.validateForm(cardData);
     expect(wrapper.vm.errors.cardNumber).to.equal("Please correct your card number");
   });
-  it("validate card cvc", () => {
+  it("should validate card cvc", () => {
     // correct card cvc value
     cardData.cvc = "424";
     wrapper.setData({
@@ -67,7 +68,7 @@ describe("Card.vue validation", () => {
     wrapper.vm.validateForm(cardData);
     expect(wrapper.vm.errors.cardCVC).to.equal("Please enter a valid CVC number");
   });
-  it("validate card expiry", () => {
+  it("should validate card expiry", () => {
     // correct card expiry date
     cardData.expiry.month = "12";
     cardData.expiry.year = "2019";
@@ -95,7 +96,7 @@ describe("Card.vue validation", () => {
     wrapper.vm.validateForm(cardData);
     expect(wrapper.vm.errors.expiryDate).to.equal("Please enter a valid month and date");
   });
-  it("validate user name on the card", () => {
+  it("should validate user name on the card", () => {
     // correct card cvc
     cardData.name.firstName = "nirav";
     cardData.name.lastName = "bhut";
