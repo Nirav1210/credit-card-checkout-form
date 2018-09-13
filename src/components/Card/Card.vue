@@ -1,11 +1,12 @@
 <template>
   <div class="form-container">
-    <b-form @submit="onSubmit" name="creditCardForm">
+    <b-alert variant="success" :show="isPaymentSuccess"> Payment Successful !!</b-alert>
+    <b-form @submit.prevent="onSubmit" name="creditCardForm">
       <div class="left-container">
         <b-form-group label="CARD NUMBER" id="cardNumber" :invalid-feedback="errors.cardNumber" :state="getValidityState(errors.cardNumber)">
           <b-row>
-            <b-col v-for="(item, index) in numberSets" :key="index">
-              <b-form-input :class="`inputs-${index}`" type="text" maxlength="4" :id="`${index}`" v-model="numberSets[index]"
+            <b-col v-for="(item, index) in card.cardNumber" :key="index">
+              <b-form-input :class="`inputs-${index}`" type="text" maxlength="4" :id="`${index}`" v-model="card.cardNumber[index]"
                 v-numericOnly v-autoTab required placeholder="0000" :state="getValidityState(errors.cardNumber)">
               </b-form-input>
             </b-col>
@@ -13,14 +14,16 @@
         </b-form-group>
         <b-row>
           <b-col cols="4">
-            <b-form-group class="card-firstname" label="FIRST NAME">
-              <b-form-input type="text" maxlength="20" v-autoTab v-model="card.name.firstName" required>
+            <b-form-group class="card-firstname" label="FIRST NAME" :invalid-feedback="errors.cardName" :state="getValidityState(errors.cardName)">
+              <b-form-input type="text" maxlength="20" v-autoTab v-alphabetsOnly v-model="card.name.firstName" required
+                :state="getValidityState(errors.cardName)">
               </b-form-input>
             </b-form-group>
           </b-col>
           <b-col cols="6">
             <b-form-group class="card-lastname" label="LAST NAME">
-              <b-form-input type="text" maxlength="20" v-autoTab v-model="card.name.lastName" required>
+              <b-form-input type="text" maxlength="20" v-autoTab v-alphabetsOnly v-model="card.name.lastName" required
+                :state="getValidityState(errors.cardName)">
               </b-form-input>
             </b-form-group>
           </b-col>
@@ -29,16 +32,16 @@
         </b-row>
         <b-row>
           <b-col>
-            <b-form-group label="MONTH" :invalid-feedback="errors.expiryMonth" :state="getValidityState(errors.expiryMonth)">
+            <b-form-group label="MONTH" :invalid-feedback="errors.expiryDate" :state="getValidityState(errors.expiryDate)">
               <b-form-input type="text" id="expiryMonth" v-numericOnly maxlength="2" v-model="card.expiry.month"
-                v-autoTab required :state="getValidityState(errors.expiryMonth)" placeholder="00">
+                v-autoTab required :state="getValidityState(errors.expiryDate)" placeholder="00">
               </b-form-input>
             </b-form-group>
           </b-col>
           <b-col>
-            <b-form-group label="YEAR" :invalid-feedback="errors.expiryYear" :state="getValidityState(errors.expiryYear)">
+            <b-form-group label="YEAR" :state="getValidityState(errors.expiryDate)">
               <b-form-input type="text" id="expiryYear" v-numericOnly maxlength="4" v-model="card.expiry.year"
-                v-autoTab required :state="getValidityState(errors.expiryYear)" placeholder="0000">
+                v-autoTab required :state="getValidityState(errors.expiryDate)" placeholder="0000">
               </b-form-input>
             </b-form-group>
           </b-col>
@@ -54,14 +57,14 @@
         </b-row>
       </div>
       <div class="right-container">
-        <div class="card-type-container">
-          <img :src="getImgUrl(card.cardType)" alt="card type">
+        <div>
+          <img :src="getImgUrl(cardType)" alt="card type">
         </div>
       </div>
       <div class="card-footer">
-        <b-row class="row-footer">
-          <b-col class="col-amount">
-            <div><span class="thick">TOTAL: </span><span class="thick amount">{{ card.amount }}</span></div>
+        <b-row>
+          <b-col>
+            <div class="centered-content"><span>TOTAL: </span><span class="amount">{{ card.amount }}</span></div>
           </b-col>
           <b-col cols="4"></b-col>
           <b-col>
