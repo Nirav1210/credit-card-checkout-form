@@ -8,6 +8,14 @@ A credit card checkout form using vue.js
 - Credit card form validates data, and displays a message on success otherwise shows an error/errors.
 
 ## Project setup
+
+### Clone the repo and go into the directory
+```
+git clone https://github.com/Nirav1210/credit-card-checkout-form.git
+cd credit-card-checkout-form
+```
+
+### Install all the depedencies
 ```
 npm install
 ```
