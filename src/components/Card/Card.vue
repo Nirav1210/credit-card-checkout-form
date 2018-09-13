@@ -64,11 +64,11 @@
       <div class="card-footer">
         <b-row>
           <b-col>
-            <div class="centered-content"><span>TOTAL: </span><span class="amount">{{ card.amount }}</span></div>
+            <div class="total-amount-info"><span>TOTAL: </span><span class="amount">{{ card.amount }}</span></div>
           </b-col>
           <b-col cols="4"></b-col>
           <b-col>
-            <b-button class="pay-button" type="submit" variant="primary">PAY NOW</b-button>
+            <b-button class="button-paynow" type="submit" variant="primary">PAY NOW</b-button>
           </b-col>
         </b-row>
       </div>

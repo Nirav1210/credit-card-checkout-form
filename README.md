@@ -1,5 +1,5 @@
 # credit-card-checkout-form
-A credit card checkout form page using vue.js
+A credit card checkout form using vue.js
 - This project is created with `Vue CLI 3` ( [link](https://cli.vuejs.org/) )
 - This project is an implementation of the following design. ( [Link](https://dribbble.com/shots/4845299-Daily-UI-Credit-Card-Checkout) )
 
@@ -35,7 +35,7 @@ npm run test
 ### For Card validation
 - payment ( [Link](https://github.com/jessepollak/payment#readme) )
 
-### For unit tests
+### For Unit tests
 - Vue Test Utils( [Link](https://vue-test-utils.vuejs.org/) )
 
 

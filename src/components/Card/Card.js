@@ -13,13 +13,12 @@ export default {
             type: Object,
             default: function () {
                 return {
-                    amount: "$100",
-                    cardType: "mastercard",
+                    amount: "",
                     name: {
                         firstName: "",
                         lastName: ""
                     },
-                    cardNumber: "",
+                    cardNumber: ["", "", "", ""],
                     expiry: {
                         month: "",
                         year: ""
@@ -33,73 +32,119 @@ export default {
         return {
             card: this.cardInfo,
             cardTypes: ["mastercard", "visa"],
-            numberSets: ["", "", "", ""],
             isError: false,
             errors: {
                 cardNumber: "",
-                expiryMonth: "",
-                expiryYear: "",
-                cardCVC: ""
-            }
+                expiryDate: "",
+                cardCVC: "",
+                cardName: ""
+            },
+            isPaymentSuccess: false
         };
     },
+    created() {
+        // set amount value once card instance is created
+        this.card.amount = "100$";
+    },
     methods: {
-        getImgUrl(src) {
+        /**
+         * Display card type icon on the screen
+         * @param {String} type - type of the card
+         */
+        getImgUrl(type) {
             var images = require.context("../../assets/", false, /\.png$/);
-            return images("./" + src + ".png");
+            return images("./" + type + ".png");
         },
-        getValidityState(field) {
-            return field.length > 0 ? false : null;
+        /**
+         * if the errorString value exists, then input state is invalid
+         * @param {String} errorString - error string
+         */
+        getValidityState(errorString) {
+            return errorString.length > 0 ? false : null;
         },
-        onSubmit(evt) {
-            evt.preventDefault();
-            this.card.cardNumber = this.numberSets.join("");
-            this.errors = this.validateForm(this.card);
+        /**
+         * Submit the credit card form
+         */
+        onSubmit() {
+            // validate provided input values
+            this.validateForm(this.card);
+            if (!this.isError) {
+                this.isPaymentSuccess = true;
+            }
         },
+        /**
+         * Validates user provided values using a library called 'payment'
+         * https://www.npmjs.com/package/payment
+         * @param {Object} card - card object containing input values
+         */
         validateForm(card) {
-            const isValidNumber = Payment.fns.validateCardNumber(card.cardNumber);
-            const isValidCardType = this.cardTypes.includes(
-                Payment.fns.cardType(card.cardNumber)
-            );
+            const isValidNumber = Payment.fns.validateCardNumber(card.cardNumber.join(""));
             const isValidCVC = Payment.fns.validateCardCVC(card.cvc);
             const isValidExpiry = Payment.fns.validateCardExpiry(
                 card.expiry.month,
                 card.expiry.year
             );
+            const fullName = card.name.firstName + card.name.lastName;
+            const isValidName = fullName.length > 0 && /^[a-zA-Z]*$/.test(fullName) ? true : false;
 
-            let errorList = {
+            this.handleErrors(isValidNumber, isValidCVC, isValidExpiry, isValidName);
+        },
+        /**
+         * Generate error messages based on provided input values
+         * @param {Boolean} isValidNumber - validity result for card number
+         * @param {Boolean} isValidCVC - validity result for card cvc
+         * @param {Boolean} isValidExpiry - validity result for card expiration
+         */
+        handleErrors(isValidNumber, isValidCVC, isValidExpiry, isValidName) {
+            this.errors = {
                 cardNumber: "",
-                expiryMonth: "",
-                expiryYear: "",
-                cardCVC: ""
+                expiryDate: "",
+                cardCVC: "",
+                cardName: ""
             };
-            if (isValidCardType) {
-                this.card.cardType = Payment.fns.cardType(card.cardNumber);
-            }
+            this.isError = false;
             if (!isValidNumber) {
-                errorList.cardNumber = "Please correct your card number";
+                this.errors.cardNumber = "Please correct your card number";
+                this.isError = true;
             }
             if (!isValidCVC) {
-                errorList.cardCVC = "CVC number is not valid";
+                this.errors.cardCVC = "Please enter a valid CVC number";
+                this.isError = true;
             }
             if (!isValidExpiry) {
-                errorList.expiryMonth = "Please enter correct expiration month";
-                errorList.expiryYear = "Please enter correct expiration year";
+                this.errors.expiryDate = "Please enter a valid month and date";
+                this.isError = true;
             }
-            return errorList;
+            if (!isValidName) {
+                this.errors.cardName = "Please enter a valid firstname and lastname";
+                this.isError = true;
+            }
         }
     },
     directives: {
+        // allows only numeric values in an input field
         numericOnly: {
             bind(el) {
                 el.addEventListener("keyup", () => {
                     let regex = /^[0-9]*$/;
                     if (!regex.test(el.value)) {
-                        el.value = el.value.slice(0, -1);
+                        el.value = el.value.replace(/\D/g,'');
                     }
                 });
             }
         },
+        // allow only alphbet values in an input field
+        alphabetsOnly: {
+            bind(el) {
+                el.addEventListener("keyup", () => {
+                    let regex = /^[a-zA-Z]*$/;
+                    if (!regex.test(el.value)) {
+                        el.value = el.value.replace(/[^A-Za-z]/g, '');
+                    }
+                });
+            }
+        },
+        // enable auto tabs between input fields based on maxLength value
         autoTab: {
             bind(el) {
                 el.addEventListener("keyup", () => {
@@ -111,15 +156,22 @@ export default {
         }
     },
     computed: {
-        // a computed getter
-        cardNumber: function () {
-            // `this` points to the vm instance
-            return this.card.numberSets.join("");
-        }
-    },
-    watch: {
-        errors() {
-            this.isError = this.errors.length > 0 ? true : false;
+        // TODO: currently defaults to 'mastercard' if card type can not
+        // be identified, which needs to be revisited and fixed to display
+        // correct card type (NOTE)
+
+        // card type get computed based on card number value
+        // default value is 'mastercard'
+        // https://www.npmjs.com/package/payment#paymentfnscardtypenumber
+        cardType: function () {
+            const isValidCardType = this.cardTypes.includes(
+                Payment.fns.cardType(this.card.cardNumber.join(""))
+            );
+            if (isValidCardType) {
+                return Payment.fns.cardType(this.card.cardNumber.join(""));
+            } else {
+                return "mastercard";
+            }
         }
     }
 };

@@ -1,7 +1,7 @@
 .form-container {
     padding: 10% 20% 10%;
     background-color: #e2d1c6;
-    font-size: 10pt;
+    font-size: 0.7rem;
     font-family: Verdana, Geneva, sans-serif;
 
     form {
@@ -21,10 +21,8 @@
             input {
                 font-size: 0.7rem;
             }
-
-            font-size: 0.7rem;
             flex: 1 0 65%;
-            padding: 20px;
+            padding: 3%;
         }
 
         .right-container {
@@ -32,44 +30,43 @@
             flex: 1;
 
             img {
-                width: 70px;
+                width: 75px;
             }
         }
 
         .card-footer {
             background-color: white;
-            padding: 20px;
-            display: block;
+            padding-top: 3%;
             width: 100%;
-
-            span.thick {
-                font-weight: bold;
-            }
+            font-weight: bold;
 
             span.amount {
                 color: #d1ac6a;
+                padding-left: 5px;
             }
 
-            .col-amount {
+            .total-amount-info {
                 position: relative;
                 top: 50%;
                 transform: translateY(-50%);
             }
 
-            .row-footer {
-                height: 50px;
-            }
-
-            .pay-button {
+            .button-paynow {
                 width: 70%;
-                height: 100%;
-                font-size: 9pt;
+                padding: 15px;
                 float: right;
                 border: none;
+                font-size: 0.7rem;
                 background-color: #d1ac6a;
                 border-radius: 35px;
-                box-shadow: 9px 9px 64px -25px rgba(0, 0, 0, 0.75),
-                    inset 1px 1px 60px -20px rgba(253, 253, 253, 0.75);
+
+                &:focus {
+                    box-shadow: 0 0 3pt 2pt #007bff;
+                }
+
+                &:hover {
+                    box-shadow: 0 0 3pt 2pt #007bff;
+                }
             }
         }
     }
