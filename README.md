@@ -35,6 +35,13 @@ npm run build
 npm run test
 ```
 
+## Features
+- Numeric only, Alphabets only fields (to prevent users from typing incorrect information)
+- Auto-tabbing between input fields based on maxLength
+- validation for each input field
+- Error handling for each input fields
+- Dynamic updation of card type icon (based on provided card number)
+
 ## Libraries used
 
 ### For Layout 
