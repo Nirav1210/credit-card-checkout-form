@@ -1,13 +1,18 @@
+$font-stack: Verdana, Geneva, sans-serif;
+$font-size: 0.8rem;
+$background-color: #e2d1c6;
+$form-background-color: #FCFDFE;
+
 .form-container {
     padding: 10% 20% 10%;
-    background-color: #e2d1c6;
-    font-size: 0.7rem;
-    font-family: Verdana, Geneva, sans-serif;
+    background-color: $background-color;
+    font-size: $font-size;
+    font-family: $font-stack;
 
     form {
         display: flex;
         flex-wrap: wrap;
-        background-color: white;
+        background-color: $form-background-color;
         border-radius: 10px;
         padding: 5%;
 
@@ -18,45 +23,43 @@
         }
 
         .left-container {
+            flex: 1 1 75%;
+            padding: 5%;
+            color: darkgray;
             input {
-                font-size: 0.7rem;
+                font-size: $font-size;
             }
-            flex: 1 0 65%;
-            padding: 3%;
         }
 
         .right-container {
-            padding-left: 5%;
             flex: 1;
-
             img {
-                width: 75px;
+                width: 100%;
             }
         }
 
         .card-footer {
-            background-color: white;
-            padding-top: 3%;
             width: 100%;
             font-weight: bold;
+            background-color: $form-background-color;
 
             span.amount {
+                padding: 5%;
                 color: #d1ac6a;
-                padding-left: 5px;
             }
 
             .total-amount-info {
-                position: relative;
                 top: 50%;
+                position: relative;
                 transform: translateY(-50%);
             }
 
             .button-paynow {
-                width: 70%;
-                padding: 15px;
+                width: 80%;
+                padding: 10%;
                 float: right;
                 border: none;
-                font-size: 0.7rem;
+                font-size: $font-size;
                 background-color: #d1ac6a;
                 border-radius: 35px;
 
